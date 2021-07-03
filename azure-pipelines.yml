@@ -6,15 +6,22 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
+stages:
+ - stage: Build
+   jobs:
+   - job: Build
+
+
+     pool:
+        vmImage: 'windows-latest'
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
+     steps:
+      -
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
