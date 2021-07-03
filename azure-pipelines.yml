@@ -7,22 +7,37 @@ trigger:
 - master
 
 stages:
- - stage: Build
-   jobs:
-   - job: Build
-
-
-     pool:
-        vmImage: 'windows-latest'
+- stage: Build
+  jobs:
+  - job: Build
+pool:
+  vmImage: 'windows-latest'
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-     steps:
-      -
+stages:
+- stage: Deploy
+  jobs:
+  - job: Deploy
+pool:
+  vmImage: 'windows-latest'
+  steps:
+     -
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Free Trial(270c6c2f-a47c-4922-8ffc-33824e7987d9)'
+      appType: 'webApp'
+      WebAppName: 'ReactCrud-Eniyal'
+      packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+
 - task: NuGetToolInstaller@1
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 
 
 - task: NuGetCommand@2
   inputs:
