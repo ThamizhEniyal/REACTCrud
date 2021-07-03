@@ -6,12 +6,7 @@
 trigger:
 - master
 
-stages:
-- stage: Build
-  jobs:
-  - job: Build
-pool:
-  vmImage: 'windows-latest'
+
 
 variables:
   solution: '**/*.sln'
